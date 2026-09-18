@@ -16,6 +16,10 @@ const sendOtp = async (phone) => {
   }
 
   const url = `${BASE_URL}/${API_KEY}/SMS/${phone}/AUTOGEN`;
+  console.log(
+    "[DEBUG] Calling 2Factor URL:",
+    url.replace(API_KEY, API_KEY.slice(0, 4) + "..." + API_KEY.slice(-4))
+  );
   const { data } = await axios.get(url);
 
   if (data.Status !== "Success") {
