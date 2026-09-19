@@ -3,12 +3,13 @@ const router = express.Router();
 const multer = require("multer");
 const Crop = require("../models/Crop");
 const { protect, requireRole } = require("../middleware/authMiddleware");
-const { storage } = require("../config/cloudinary");
+const { uploadBufferToCloudinary } = require("../config/cloudinary");
 
-// Multer setup for crop image uploads — stores directly to Cloudinary,
-// since Vercel's serverless filesystem is read-only/ephemeral (no local disk storage).
+// Multer setup for crop image uploads — keeps the file in memory (as a buffer)
+// instead of writing to local disk, since Vercel's serverless filesystem is
+// read-only/ephemeral. The buffer is then uploaded to Cloudinary manually below.
 const upload = multer({
-  storage,
+  storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     if (file.mimetype.startsWith("image/")) cb(null, true);
@@ -29,6 +30,12 @@ router.post(
         return res.status(400).json({ message: "Missing required fields" });
       }
 
+      let imageUrl = "";
+      if (req.file) {
+        const result = await uploadBufferToCloudinary(req.file.buffer);
+        imageUrl = result.secure_url;
+      }
+
       const crop = await Crop.create({
         farmer: req.user._id,
         name,
@@ -37,13 +44,13 @@ router.post(
         unit,
         price,
         description,
-        image: req.file ? req.file.path : "",
+        image: imageUrl,
       });
 
       res.status(201).json(crop);
     } catch (err) {
       console.error(err.message);
-      res.status(500).json({ message: "Failed to list crop" });
+      res.status(500).json({ message: err.message || "Failed to list crop" });
     }
   }
 );
