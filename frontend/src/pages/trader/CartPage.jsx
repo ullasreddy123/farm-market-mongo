@@ -42,7 +42,11 @@ export default function CartPage() {
         ) : (
           <>
             {items.map(({ crop, quantity }) => {
-              const imageUrl = crop.image ? `${API_ORIGIN}${crop.image}` : null;
+              const imageUrl = crop.image
+                ? crop.image.startsWith("http")
+                  ? crop.image
+                  : `${API_ORIGIN}${crop.image}`
+                : null;
               return (
                 <div className="cart-item" key={crop._id}>
                   {imageUrl ? (
