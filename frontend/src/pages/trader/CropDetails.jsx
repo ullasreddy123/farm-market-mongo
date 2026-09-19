@@ -30,7 +30,11 @@ export default function CropDetails() {
   if (loading) return <div className="center-loading">{t("loading")}</div>;
   if (!crop) return <div className="center-loading">Not found</div>;
 
-  const imageUrl = crop.image ? `${API_ORIGIN}${crop.image}` : null;
+  const imageUrl = crop.image
+    ? crop.image.startsWith("http")
+      ? crop.image
+      : `${API_ORIGIN}${crop.image}`
+    : null;
 
   const handleAddToCart = () => {
     addToCart(crop, Number(quantity));
