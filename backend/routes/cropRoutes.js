@@ -1,18 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-const path = require("path");
 const Crop = require("../models/Crop");
 const { protect, requireRole } = require("../middleware/authMiddleware");
+const { storage } = require("../config/cloudinary");
 
-// Multer setup for crop image uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, path.join(__dirname, "..", "uploads")),
-  filename: (req, file, cb) => {
-    const unique = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-    cb(null, `${unique}${path.extname(file.originalname)}`);
-  },
-});
+// Multer setup for crop image uploads — stores directly to Cloudinary,
+// since Vercel's serverless filesystem is read-only/ephemeral (no local disk storage).
 const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 },
@@ -43,7 +37,7 @@ router.post(
         unit,
         price,
         description,
-        image: req.file ? `/uploads/${req.file.filename}` : "",
+        image: req.file ? req.file.path : "",
       });
 
       res.status(201).json(crop);
