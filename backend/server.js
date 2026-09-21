@@ -7,6 +7,7 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const cropRoutes = require("./routes/cropRoutes");
+const weatherRoutes = require("./routes/weatherRoutes");
 const Category = require("./models/Category");
 
 connectDB().catch((err) => {
@@ -54,6 +55,7 @@ app.get("/api/temp-seed-categories", async (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/crops", cropRoutes);
+app.use("/api/weather", weatherRoutes);
 
 // 404 handler
 app.use((req, res) => res.status(404).json({ message: "Route not found" }));
