@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import { useAuth } from "../../context/AuthContext";
 import api from "../../api/axios";
+import WeatherWidget from "../../components/WeatherWidget";
 
 export default function FarmerDashboard() {
   const { t, lang } = useLanguage();
@@ -47,6 +48,7 @@ export default function FarmerDashboard() {
       </div>
 
       <div className="dashboard-body">
+        <WeatherWidget />
         <h3 className="section-title">{t("categories")}</h3>
         {loading ? (
           <div className="center-loading">{t("loading")}</div>
