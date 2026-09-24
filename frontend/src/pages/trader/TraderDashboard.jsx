@@ -35,6 +35,9 @@ export default function TraderDashboard() {
             <p className="subtitle">{t("selectCategoryToPurchase")}</p>
           </div>
           <div className="topbar">
+            <button className="icon-btn" onClick={() => navigate("/trader/orders")} title="My Orders">
+              📦
+            </button>
             <button className="icon-btn" onClick={() => navigate("/trader/cart")} title={t("cart")}>
               🛒{totalItems > 0 ? ` ${totalItems}` : ""}
             </button>
