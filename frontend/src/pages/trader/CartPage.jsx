@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import { useCart } from "../../context/CartContext";
+import api from "../../api/axios";
 
 const API_ORIGIN = (import.meta.env.VITE_API_URL || "http://localhost:5000/api").replace(
   "/api",
@@ -11,10 +13,23 @@ export default function CartPage() {
   const { t } = useLanguage();
   const navigate = useNavigate();
   const { items, removeFromCart, totalAmount, totalItems, clearCart } = useCart();
+  const [placing, setPlacing] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleBuy = () => {
-    clearCart();
-    navigate("/trader/order-success");
+  const handleBuy = async () => {
+    setPlacing(true);
+    setError("");
+    try {
+      await api.post("/orders", {
+        items: items.map(({ crop, quantity }) => ({ cropId: crop._id, quantity })),
+      });
+      clearCart();
+      navigate("/trader/order-success");
+    } catch (err) {
+      setError(err.response?.data?.message || "Could not place order");
+    } finally {
+      setPlacing(false);
+    }
   };
 
   return (
@@ -90,9 +105,15 @@ export default function CartPage() {
               <div className="amount">₹{totalAmount}</div>
             </div>
 
-            <button className="btn btn-primary btn-block" style={{ marginTop: 20 }} onClick={handleBuy}>
-              {t("clickToBuy")}
+            <button
+              className="btn btn-primary btn-block"
+              style={{ marginTop: 20 }}
+              onClick={handleBuy}
+              disabled={placing}
+            >
+              {placing ? "..." : t("clickToBuy")}
             </button>
+            {error && <p className="weather-error">{error}</p>}
           </>
         )}
       </div>
