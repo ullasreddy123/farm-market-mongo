@@ -8,9 +8,9 @@ export default function OrderSuccess() {
   return (
     <div className="order-success-page">
       <div className="truck-scene">
-        <span className="crop-emoji-target">🌾</span>
+        <span className="crop-emoji-target">🌾𓃔𓃽𓀚</span>
         <span className="truck-road" />
-        <span className="truck-emoji">🚚</span>
+        <span className="truck-emoji">🚜</span>
       </div>
       <h1>{t("thankYou")}</h1>
       <p>{t("orderOnWay")}</p>
