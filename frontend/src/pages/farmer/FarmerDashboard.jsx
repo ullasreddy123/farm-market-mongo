@@ -44,6 +44,9 @@ export default function FarmerDashboard() {
           <button className="btn btn-outline" onClick={() => navigate("/farmer/my-list")}>
             📋 {t("myList")}
           </button>
+          <button className="btn btn-outline" onClick={() => navigate("/farmer/orders")}>
+            📦 Orders
+          </button>
         </div>
       </div>
 
