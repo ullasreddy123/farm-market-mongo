@@ -731,6 +731,26 @@ a {
     padding: 26px 22px;
   }
 }
+.weather-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--white);
+  border: 1px solid var(--cream-dark);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.weather-widget-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
 /* ---------- Weather widget ---------- */
 .weather-widget {
