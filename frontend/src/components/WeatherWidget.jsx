@@ -92,8 +92,8 @@ export default function WeatherWidget() {
             {loading ? "..." : "Check"}
           </button>
         </form>
-        <button className="icon-btn" onClick={() => setOpen(false)} title="Close">
-          ✕
+        <button className="weather-close-btn" onClick={() => setOpen(false)} title="Close">
+            ✕
         </button>
       </div>
 
