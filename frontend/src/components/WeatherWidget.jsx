@@ -37,6 +37,7 @@ function formatDay(dateStr, index) {
 }
 
 export default function WeatherWidget() {
+  const [open, setOpen] = useState(false);
   const [city, setCity] = useState(() => localStorage.getItem("fm_weather_city") || "");
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -59,19 +60,42 @@ export default function WeatherWidget() {
     }
   };
 
+  // Collapsed: just a small icon pill. Shows a quick summary once we have data.
+  if (!open) {
+    const today = data?.forecast?.[0];
+    return (
+      <button className="weather-pill" onClick={() => setOpen(true)}>
+        {today ? (
+          <>
+            {codeToWeather(today.weatherCode).icon} {data.location.split(",")[0]}{" "}
+            {Math.round(today.tempMax)}°
+          </>
+        ) : (
+          <>🌤️ Weather</>
+        )}
+      </button>
+    );
+  }
+
   return (
     <div className="weather-widget">
-      <form className="weather-search" onSubmit={fetchWeather}>
-        <input
-          type="text"
-          placeholder="Enter your city (e.g. Bengaluru)"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-        />
-        <button type="submit" className="btn btn-outline" disabled={loading}>
-          {loading ? "..." : "Check"}
+      <div className="weather-widget-header">
+        <form className="weather-search" onSubmit={fetchWeather}>
+          <input
+            type="text"
+            autoFocus
+            placeholder="Enter your city (e.g. Bengaluru)"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+          />
+          <button type="submit" className="btn btn-outline" disabled={loading}>
+            {loading ? "..." : "Check"}
+          </button>
+        </form>
+        <button className="icon-btn" onClick={() => setOpen(false)} title="Close">
+          ✕
         </button>
-      </form>
+      </div>
 
       {error && <p className="weather-error">{error}</p>}
 
