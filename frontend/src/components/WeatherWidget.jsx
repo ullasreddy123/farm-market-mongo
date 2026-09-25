@@ -64,7 +64,7 @@ export default function WeatherWidget() {
       <form className="weather-search" onSubmit={fetchWeather}>
         <input
           type="text"
-          placeholder="Enter your location to fetch weather report (e.g. Bengaluru)"
+          placeholder="Enter your city (e.g. Bengaluru)"
           value={city}
           onChange={(e) => setCity(e.target.value)}
         />
