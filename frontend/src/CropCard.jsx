@@ -1,33 +1,18 @@
 import { useLanguage } from "../context/LanguageContext";
 
-const API_ORIGIN = (
-  import.meta.env.VITE_API_URL || "http://localhost:5000/api"
-).replace(/\/api\/?$/, "");
-
 export default function CropCard({ crop, categoryName, children }) {
   const { t } = useLanguage();
 
-  console.log("CROP OBJECT:", crop);
-  console.log("CROP IMAGE:", crop.image);
-  console.log("IMAGE TYPE:", typeof crop.image);
-  console.log("STARTS WITH HTTP:", crop.image?.startsWith("http"));
-
-  const imageUrl = crop.image
-    ? crop.image.startsWith("http")
-      ? crop.image
-      : `${API_ORIGIN}${crop.image}`
-    : null;
-
-  console.log("FINAL IMAGE URL:", imageUrl);
-
   return (
     <div className="crop-card">
-      {imageUrl ? (
+      {crop.image ? (
         <img
           className="crop-image"
-          src={imageUrl}
+          src={crop.image}
           alt={crop.name}
-          onError={() => console.error("IMAGE FAILED:", imageUrl)}
+          onError={(e) => {
+            console.error("Image failed:", crop.image);
+          }}
         />
       ) : (
         <div className="crop-image placeholder">🌾</div>
