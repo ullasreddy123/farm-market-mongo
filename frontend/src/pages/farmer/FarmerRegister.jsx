@@ -1,15 +1,22 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import { useAuth } from "../../context/AuthContext";
 import api from "../../api/axios";
+import AssistantChat from "../../components/AssistantChat";
 
 export default function FarmerRegister() {
   const { t } = useLanguage();
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-  const [form, setForm] = useState({ username: "", phone: "", email: "", password: "" });
+  const [form, setForm] = useState({
+    username: searchParams.get("name") || "",
+    phone: searchParams.get("phone") || "",
+    email: "",
+    password: "",
+  });
   const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
@@ -150,6 +157,7 @@ export default function FarmerRegister() {
           </Link>
         </div>
       </div>
+      <AssistantChat page="register" />
     </div>
   );
 }
