@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import { useAuth } from "../../context/AuthContext";
 import api from "../../api/axios";
+import AssistantChat from "../../components/AssistantChat";
 
 export default function TraderLogin() {
   const { t } = useLanguage();
@@ -83,6 +84,7 @@ export default function TraderLogin() {
           </Link>
         </div>
       </div>
+      <AssistantChat page="login" />
     </div>
   );
 }
