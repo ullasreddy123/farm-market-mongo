@@ -4,6 +4,7 @@ import { useLanguage } from "../../context/LanguageContext";
 import { useAuth } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext";
 import api from "../../api/axios";
+import AssistantChat from "../../components/AssistantChat";
 
 export default function TraderDashboard() {
   const { t, lang } = useLanguage();
@@ -67,6 +68,7 @@ export default function TraderDashboard() {
           </div>
         )}
       </div>
+      <AssistantChat page="traderDashboard" />
     </div>
   );
 }
