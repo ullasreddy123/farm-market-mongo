@@ -7,7 +7,11 @@ const API_ORIGIN = (import.meta.env.VITE_API_URL || "http://localhost:5000/api")
 
 export default function CropCard({ crop, categoryName, children }) {
   const { t } = useLanguage();
-  const imageUrl = crop.image ? `${API_ORIGIN}${crop.image}` : null;
+  const imageUrl = crop.image
+  ? crop.image.startsWith("http")
+    ? crop.image
+    : `${API_ORIGIN}${crop.image}`
+  : null;
 
   return (
     <div className="crop-card">
