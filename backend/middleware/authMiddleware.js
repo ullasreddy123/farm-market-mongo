@@ -28,4 +28,22 @@ const requireRole = (role) => (req, res, next) => {
   next();
 };
 
-module.exports = { protect, requireRole };
+// Like `protect`, but never blocks the request — just attaches req.user
+// if a valid token is present. Used by routes that serve both logged-in
+// and anonymous users (e.g. the AI assistant, which helps new users
+// register too).
+const attachUserIfPresent = async (req, res, next) => {
+  const header = req.headers.authorization;
+  if (header && header.startsWith("Bearer")) {
+    try {
+      const token = header.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = await User.findById(decoded.id).select("-password");
+    } catch (err) {
+      // invalid/expired token — just proceed without a user
+    }
+  }
+  next();
+};
+
+module.exports = { protect, requireRole, attachUserIfPresent };
