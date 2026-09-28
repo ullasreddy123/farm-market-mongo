@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import api from "../../api/axios";
+import AssistantChat from "../../components/AssistantChat";
 
 export default function TraderForgotPassword() {
   const { t } = useLanguage();
@@ -126,6 +127,7 @@ export default function TraderForgotPassword() {
           </Link>
         </div>
       </div>
+      <AssistantChat page="forgot" />
     </div>
   );
 }
