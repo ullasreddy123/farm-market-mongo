@@ -4,6 +4,7 @@ import { useLanguage } from "../../context/LanguageContext";
 import { useAuth } from "../../context/AuthContext";
 import api from "../../api/axios";
 import WeatherWidget from "../../components/WeatherWidget";
+import AssistantChat from "../../components/AssistantChat";
 
 export default function FarmerDashboard() {
   const { t, lang } = useLanguage();
@@ -70,6 +71,7 @@ export default function FarmerDashboard() {
           </div>
         )}
       </div>
+      <AssistantChat page="farmerDashboard" />
     </div>
   );
 }
