@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import LanguageSelector from "../components/LanguageSelector";
+import AssistantChat from "../components/AssistantChat";
 
 export default function Welcome() {
   const { t } = useLanguage();
@@ -28,6 +29,7 @@ export default function Welcome() {
           </button>
         </div>
       </div>
+      <AssistantChat page="welcome" />
     </div>
   );
 }
