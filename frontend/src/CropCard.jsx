@@ -3,6 +3,8 @@ import { useLanguage } from "../context/LanguageContext";
 export default function CropCard({ crop, categoryName, children }) {
   const { t } = useLanguage();
 
+  console.log("CROP IMAGE:", crop.image);
+
   return (
     <div className="crop-card">
       {crop.image ? (
@@ -11,7 +13,7 @@ export default function CropCard({ crop, categoryName, children }) {
           src={crop.image}
           alt={crop.name}
           onError={(e) => {
-            console.error("Image failed:", crop.image);
+            console.error("IMAGE URL FAILED:", e.currentTarget.src);
           }}
         />
       ) : (
