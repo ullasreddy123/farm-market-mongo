@@ -119,4 +119,4 @@ Food Crops, Industrial & Technical Crops, Agronomic & Soil-Management Crops, Pul
 ## 8. What's Not Included (by design, per your spec)
 
 - No payment gateway — checkout ends with the animated "Thank you, your order is on the way" screen.
-- No order status tracking (PLACED → DELIVERED) — just the delivery animation.
+
