@@ -13,11 +13,22 @@ export default function CropListPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
-    api
-      .get(`/crops/category/${categoryId}`)
-      .then(({ data }) => setCrops(data))
-      .finally(() => setLoading(false));
+    const load = (showSpinner) => {
+      if (showSpinner) setLoading(true);
+      api
+        .get(`/crops/category/${categoryId}`)
+        .then(({ data }) => setCrops(data))
+        .finally(() => setLoading(false));
+    };
+    load(true);
+
+    // Stock changes when other traders order, so refresh quietly when this
+    // tab becomes visible again.
+    const onVisible = () => {
+      if (document.visibilityState === "visible") load(false);
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => document.removeEventListener("visibilitychange", onVisible);
   }, [categoryId]);
 
   return (
