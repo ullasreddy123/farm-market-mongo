@@ -36,8 +36,13 @@ export default function CropDetails() {
       : `${API_ORIGIN}${crop.image}`
     : null;
 
+  const outOfStock = crop.quantity <= 0;
+  // Keep the requested amount between 1 and what is actually available
+  const safeQty = Math.min(Math.max(Number(quantity) || 1, 1), crop.quantity);
+
   const handleAddToCart = () => {
-    addToCart(crop, Number(quantity));
+    if (outOfStock) return;
+    addToCart(crop, safeQty);
     setAdded(true);
     setTimeout(() => navigate("/trader/cart"), 600);
   };
@@ -103,8 +108,12 @@ export default function CropDetails() {
               />
             </div>
 
-            <button className="btn btn-primary btn-block" onClick={handleAddToCart} disabled={added}>
-              {added ? "✓" : `🛒 ${t("addToCart")}`}
+            <button
+              className="btn btn-primary btn-block"
+              onClick={handleAddToCart}
+              disabled={added || outOfStock}
+            >
+              {outOfStock ? "Out of stock" : added ? "✓" : `🛒 ${t("addToCart")}`}
             </button>
           </div>
         </div>
