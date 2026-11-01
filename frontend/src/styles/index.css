@@ -1060,3 +1060,50 @@ a {
   margin-top: 8px;
   color: #8a8a8a;
 }
+
+
+/* ---------- Assistant: guided tap-to-answer buttons ---------- */
+.assistant-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-self: flex-start;
+  max-width: 100%;
+}
+
+.assistant-chips.center {
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.assistant-chip {
+  border: 1.5px solid #2e7d32;
+  background: #fff;
+  color: #2e7d32;
+  border-radius: 999px;
+  padding: 9px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 1.2;
+  min-height: 40px; /* comfortable to tap */
+}
+
+.assistant-chip:hover {
+  background: #e8f5e9;
+}
+
+.assistant-chip.primary {
+  background: #2e7d32;
+  color: #fff;
+}
+
+.assistant-chip.primary:hover {
+  background: #256b29;
+}
+
+.assistant-chip.muted {
+  border-color: #bdbdbd;
+  color: #616161;
+  font-weight: 500;
+}
