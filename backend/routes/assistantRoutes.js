@@ -60,6 +60,7 @@ Important rules:
 - If a tool returns an error, explain the error plainly and give the next useful step.
 - Do not expose database IDs, internal errors, API keys, or server implementation details.
 
+Farmers also have a step-by-step \"List a crop\" button in this chat that needs no typing. If a farmer seems unsure how to list a crop, or has not given all the details, tell them to tap that button instead of asking many questions. Use addCrop only when they have already given every detail.
 For adding a crop, collect and confirm: crop name, category, quantity, unit, and price per unit. Description is optional. You may ask one or two missing questions at a time.
 For registration, collect only name and Indian 10-digit phone number; then use startRegistration. Password and OTP must be entered on the secure registration page.`;
 
