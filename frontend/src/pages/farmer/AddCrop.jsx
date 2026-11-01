@@ -11,12 +11,13 @@ export default function AddCrop() {
   const [searchParams] = useSearchParams();
 
   const [categories, setCategories] = useState([]);
+  // Values can arrive pre-filled from the assistant's guided flow (?name=&quantity=...)
   const [form, setForm] = useState({
-    name: "",
+    name: searchParams.get("name") || "",
     category: searchParams.get("category") || "",
-    quantity: "",
-    unit: "kg",
-    price: "",
+    quantity: searchParams.get("quantity") || "",
+    unit: UNITS.includes(searchParams.get("unit")) ? searchParams.get("unit") : "kg",
+    price: searchParams.get("price") || "",
     description: "",
   });
   const [image, setImage] = useState(null);
